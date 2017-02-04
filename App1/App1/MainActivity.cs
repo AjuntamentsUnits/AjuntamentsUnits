@@ -54,7 +54,7 @@ namespace App1
             }
 
         }
-
+    
 
         public async void OnLocationChanged(Location location)
         {
@@ -71,7 +71,7 @@ namespace App1
 
            
             addresses = new System.Collections.Generic.List<Address>(geocoder.GetFromLocation(location.Latitude, location.Longitude, 1)); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            string s = addresses[0].GetAddressLine(1);
+            string s = addresses[0].GetAddressLine(1).ToString();
                
             codi_postal = s.Split()[0];
             codi.Text = codi_postal;
