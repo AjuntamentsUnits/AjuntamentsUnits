@@ -25,8 +25,7 @@ namespace App1
         {
             base.OnCreate(bundle);
 
-                      
-
+            String s = "";
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.Main);
 
