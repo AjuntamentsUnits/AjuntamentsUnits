@@ -6,6 +6,8 @@ using Android.Runtime;
 using System;
 using Android.Util;
 using Xamarin;
+using System.Xml;
+using System.Net;
 
 namespace App1
 {
@@ -16,7 +18,7 @@ namespace App1
         string tag = "MainActivity";
         LocationManager locMngr;
         string codi_postal = "";
-
+        int codi_Ajuntament;
         TextView codi;
 
         protected override void OnCreate(Bundle bundle)
@@ -34,8 +36,28 @@ namespace App1
 
             //buscar codi postal per obrir app
             geocodificacio();
+            codi_Ajuntament = agafarCodiAjuntament(codi_postal);
             
 
+        }
+
+        public int agafarCodiAjuntament(String codi_postal)
+        {
+            int codi = 0;
+            String xml = "";
+
+            String FilePath = "www.ajutnamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
+
+            using (var wc = new WebClient())
+            {
+                xml = wc.DownloadString(FilePath);
+            }
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(xml);
+
+
+
+            return codi;
         }
 
         public void geocodificacio()
