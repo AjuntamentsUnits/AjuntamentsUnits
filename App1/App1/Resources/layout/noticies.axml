@@ -2,6 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="180.5dp"
+        android:id="@+id/gridLayout1">
+        <Button
+            android:text="Button"
+            android:id="@+id/button1" />
+        <Button
+            android:text="Button"
+            android:id="@+id/button2" />
+    </GridLayout>
 </LinearLayout>
