@@ -26,21 +26,21 @@
                 android:layout_height="match_parent"
                 android:id="@+id/space2"
                 android:layout_marginRight="25.5dp" />
-            <Button
-                android:text="Button"
+            <ImageButton
+                android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button1" />
+                android:layout_height="match_parent"
+                android:id="@+id/btnNoticies" />
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/space1"
                 android:layout_marginRight="148.0dp" />
-            <Button
-                android:text="Button"
+            <ImageButton
+                android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button3" />
+                android:layout_height="match_parent"
+                android:id="@+id/btnAgenda" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

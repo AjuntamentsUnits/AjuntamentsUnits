@@ -8,6 +8,7 @@ using Android.Util;
 using Xamarin;
 using System.Xml;
 using System.Net;
+using Android.Content;
 
 namespace App1
 {
@@ -20,6 +21,8 @@ namespace App1
         string codi_postal = "";
         int codi_Ajuntament;
         TextView codi;
+        //ImageButton agenda;
+        //ImageButton noticia;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -36,7 +39,21 @@ namespace App1
             //buscar codi postal per obrir app
             geocodificacio();
             codi_Ajuntament = agafarCodiAjuntament(codi_postal);
-            
+            //agenda.CallOnClick(Resource.Id.btnAgenda);
+
+            ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
+            ImageButton noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
+
+            agenda.Click += delegate {
+                var activityAgenda = new Intent(this, typeof(AgendaActivity));
+                activityAgenda.PutExtra("MyData", "Data from Agenda");
+                StartActivity(activityAgenda);
+            };
+            noticia.Click += delegate {
+                var activityNoticies = new Intent(this, typeof(NoticiaActivity));
+                activityNoticies.PutExtra("MyData", "Data from Noticies");
+                StartActivity(activityNoticies);
+            };
 
         }
 
