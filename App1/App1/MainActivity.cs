@@ -9,6 +9,10 @@ using Xamarin;
 using System.Xml;
 using System.Net;
 using Android.Content;
+using Android.Net;
+using System.IO;
+using System.Threading.Tasks;
+using Org.Json;
 
 namespace App1
 {
@@ -21,28 +25,32 @@ namespace App1
         string codi_postal = "";
         int codi_Ajuntament;
         TextView codi;
-        //ImageButton agenda;
+       // ImageButton agenda;
         //ImageButton noticia;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-            String s = "";
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.Main);
 
             FormsMaps.Init(this, bundle);
 
             codi = FindViewById<TextView>(Resource.Id.codi_postal);
-
-            //buscar codi postal per obrir app
-            geocodificacio();
-            codi_Ajuntament = agafarCodiAjuntament(codi_postal);
-            //agenda.CallOnClick(Resource.Id.btnAgenda);
-
             ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
             ImageButton noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
+
+
+            ConnectivityManager connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
+            NetworkInfo networkInfo = connectivityManager.ActiveNetworkInfo;
+            bool isOnline = networkInfo.IsConnected;
+            
+            codi.Text = codi.Text + isOnline;
+
+            //buscar codi postal per obrir app
+             geocodificacio();
+
 
             agenda.Click += delegate {
                 var activityAgenda = new Intent(this, typeof(AgendaActivity));
@@ -57,23 +65,30 @@ namespace App1
 
         }
 
-        public int agafarCodiAjuntament(String codi_postal)
+        public void agafarCodiAjuntament(String codi_postal)
         {
-            int codi = 0;
-            String xml = "";
+            int codiaj = 0;
+            codi_postal = "08500";
 
-            String FilePath = "www.ajutnamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
+            String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
-            using (var wc = new WebClient())
-            {
-                xml = wc.DownloadString(FilePath);
-            }
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xml);
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.UserAgent = "NotScripting";
+            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(response.GetResponseStream());
 
 
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+            nsmgr.AddNamespace("rest", url);
 
-            return codi;
+            XmlNodeList locationElements = xmlDoc.SelectNodes("//rest:Ajuntaments",nsmgr);
+            codiaj = Convert.ToInt32(locationElements[0].SelectSingleNode(".//rest:Codi_Ajuntament",nsmgr).InnerText);
+
+            codi_Ajuntament = codiaj;
+            codi.Text = codi.Text + " " + codi_Ajuntament;  
+           
         }
 
         public void geocodificacio()
@@ -92,7 +107,7 @@ namespace App1
             }
 
         }
-    
+
 
         public async void OnLocationChanged(Location location)
         {
@@ -112,10 +127,12 @@ namespace App1
             string s = addresses[0].GetAddressLine(1).ToString();
                
             codi_postal = s.Split()[0];
-            codi.Text = codi_postal;
+            codi.Text = codi.Text + codi_postal;
 
             OnStop();
 
+            //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
+            agafarCodiAjuntament(codi_postal);
         }
 
         public void OnProviderDisabled(string provider)
