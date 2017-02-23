@@ -8,6 +8,13 @@ using Android.Util;
 using Xamarin;
 using System.Xml;
 using System.Net;
+using System.Xml.Linq;
+using Java.Net;
+using Javax.Xml.Parsers;
+using static Android.Provider.DocumentsContract;
+using System.IO;
+using Java.Lang;
+using System.Text;
 
 namespace App1
 {
@@ -25,7 +32,7 @@ namespace App1
         {
             base.OnCreate(bundle);
 
-            String s = "";
+            
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.Main);
 
@@ -35,28 +42,52 @@ namespace App1
 
             //buscar codi postal per obrir app
             geocodificacio();
-            codi_Ajuntament = agafarCodiAjuntament(codi_postal);
+            
+            
             
 
         }
 
-        public int agafarCodiAjuntament(String codi_postal)
+        /// <returns>ResultCode, 1 if success.</returns>
+        public XmlDocument CallWebService()
         {
-            int codi = 0;
-            String xml = "";
+            string result = "";
+            string URLString = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=08500";
 
-            String FilePath = "www.ajutnamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
+            // Create the web request
+            HttpWebRequest request = WebRequest.Create(new Uri(URLString)) as HttpWebRequest;
 
-            using (var wc = new WebClient())
+            // Set type to POST
+            request.Method = "POST";
+            request.ContentType = "Ajuntament/xml";
+
+            
+            // Get response and return it
+            XmlDocument xmlResult = new XmlDocument();
+            try
             {
-                xml = wc.DownloadString(FilePath);
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    result = reader.ReadToEnd();
+                    reader.Close();
+                }
+                xmlResult.LoadXml(result);
             }
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xml);
+            catch (Java.Lang.Exception e)
+            {
+               
+            }
+            return xmlResult;
+        }
 
+        public void agafarCodiAjuntament(string codi_postal)
+        {
 
+           
+            
+            //   codi.Text =""+ codi_Ajuntament + "        "+no ;
 
-            return codi;
         }
 
         public void geocodificacio()
@@ -98,6 +129,9 @@ namespace App1
             codi.Text = codi_postal;
 
             OnStop();
+            //agafarCodiAjuntament(codi_postal);
+            CallWebService();
+
 
         }
 

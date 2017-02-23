@@ -8,39 +8,33 @@
     <TextView
         android:text="Codi Postal: "
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="87.5dp"
         android:id="@+id/codi_postal" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1">
+        android:id="@+id/linearLayout1"
+        android:minWidth="25px"
+        android:minHeight="25px">
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout2"
             android:layout_marginBottom="43.0dp">
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/space2"
-                android:layout_marginRight="25.5dp" />
             <Button
                 android:text="Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button1" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/space1"
-                android:layout_marginRight="148.0dp" />
             <Button
                 android:text="Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button3" />
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/button2" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
