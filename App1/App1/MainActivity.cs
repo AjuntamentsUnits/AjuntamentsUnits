@@ -45,11 +45,14 @@ namespace App1
             ConnectivityManager connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
             NetworkInfo networkInfo = connectivityManager.ActiveNetworkInfo;
             bool isOnline = networkInfo.IsConnected;
-            
-            codi.Text = codi.Text + isOnline;
 
-            //buscar codi postal per obrir app
-             geocodificacio();
+            if (isOnline)
+            {
+                //buscar codi postal per obrir app
+                geocodificacio();
+            }
+           
+             
 
 
             agenda.Click += delegate {
@@ -67,27 +70,23 @@ namespace App1
 
         public void agafarCodiAjuntament(String codi_postal)
         {
-            int codiaj = 0;
-            codi_postal = "08500";
 
             String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.UserAgent = "NotScripting";
-            HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-
+            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
+            req.UserAgent = "ajuntament";
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(response.GetResponseStream());
 
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
+            {
+                xmlDoc.Load(resp.GetResponseStream());
+            }
 
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
-            nsmgr.AddNamespace("rest", url);
-
-            XmlNodeList locationElements = xmlDoc.SelectNodes("//rest:Ajuntaments",nsmgr);
-            codiaj = Convert.ToInt32(locationElements[0].SelectSingleNode(".//rest:Codi_Ajuntament",nsmgr).InnerText);
-
-            codi_Ajuntament = codiaj;
-            codi.Text = codi.Text + " " + codi_Ajuntament;  
+            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Ajuntament");
+            foreach (XmlNode NodeObj in xmlnodelstTrack)
+            {
+                codi_Ajuntament = Convert.ToInt32(NodeObj.ChildNodes[0].FirstChild.Value);
+            }
            
         }
 
@@ -127,7 +126,7 @@ namespace App1
             string s = addresses[0].GetAddressLine(1).ToString();
                
             codi_postal = s.Split()[0];
-            codi.Text = codi.Text + codi_postal;
+            
 
             OnStop();
 
