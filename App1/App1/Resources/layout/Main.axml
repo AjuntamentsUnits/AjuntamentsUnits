@@ -17,25 +17,34 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout1"
         android:minWidth="25px"
-        android:minHeight="25px">
+        android:minHeight="25px" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/linearLayout2">
         <LinearLayout
             android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
-            android:layout_marginBottom="43.0dp">
+            android:id="@+id/linearLayout3">
             <ImageButton
-                android:text="Button"
+                android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/imageButton1" />
+            <ImageButton
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnNoticies" />
+            <ImageButton
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnAgenda" />
-            <ImageButton
-                android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"
-                android:id="@+id/btnNoticies" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

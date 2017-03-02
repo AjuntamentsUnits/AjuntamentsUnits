@@ -21,6 +21,7 @@ namespace App1
     {
 
         string tag = "MainActivity";
+        Boolean loctrobat = false;
         LocationManager locMngr;
         string codi_postal = "";
         int codi_Ajuntament;
@@ -57,12 +58,12 @@ namespace App1
 
             agenda.Click += delegate {
                 var activityAgenda = new Intent(this, typeof(AgendaActivity));
-                activityAgenda.PutExtra("MyData", "Data from Agenda");
+                activityAgenda.PutExtra("Codi_Ajuntament", codi_Ajuntament);
                 StartActivity(activityAgenda);
             };
             noticia.Click += delegate {
                 var activityNoticies = new Intent(this, typeof(NoticiaActivity));
-                activityNoticies.PutExtra("MyData", "Data from Noticies");
+                activityNoticies.PutExtra("Codi_Ajuntament", codi_Ajuntament);
                 StartActivity(activityNoticies);
             };
 
@@ -74,7 +75,7 @@ namespace App1
             String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
-            req.UserAgent = "ajuntament";
+            req.UserAgent = "AjuntamentsUnits";
             XmlDocument xmlDoc = new XmlDocument();
 
             using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
@@ -110,28 +111,33 @@ namespace App1
 
         public async void OnLocationChanged(Location location)
         {
-            // al canviar localitzacio, buscara quina és.
-            string latitude = "";
-            string longitude = "";
-            Log.Debug(tag, "Location changed");
-            latitude = location.Latitude.ToString();
-            longitude = location.Longitude.ToString();
+
+            if (!loctrobat)
+            {
+                // al canviar localitzacio, buscara quina és.
+                string latitude = "";
+                string longitude = "";
+                Log.Debug(tag, "Location changed");
+                latitude = location.Latitude.ToString();
+                longitude = location.Longitude.ToString();
 
 
-            System.Collections.Generic.List<Address> addresses;
-            Geocoder geocoder = new Geocoder(this);
+                System.Collections.Generic.List<Address> addresses;
+                Geocoder geocoder = new Geocoder(this);
 
-           
-            addresses = new System.Collections.Generic.List<Address>(geocoder.GetFromLocation(location.Latitude, location.Longitude, 1)); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            string s = addresses[0].GetAddressLine(1).ToString();
-               
-            codi_postal = s.Split()[0];
-            
 
-            OnStop();
+                addresses = new System.Collections.Generic.List<Address>(geocoder.GetFromLocation(location.Latitude, location.Longitude, 1)); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                string s = addresses[0].GetAddressLine(1).ToString();
 
-            //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
-            agafarCodiAjuntament(codi_postal);
+                codi_postal = s.Split()[0];
+
+
+                OnStop();
+
+                //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
+                agafarCodiAjuntament(codi_postal);
+                loctrobat = true;
+            }
         }
 
         public void OnProviderDisabled(string provider)
