@@ -3872,8 +3872,8 @@ namespace App1
 			// aapt resource value: 0x7f0a0085
 			public const int btnAgenda = 2131361925;
 			
-			// aapt resource value: 0x7f0a0083
-			public const int btnNoticies = 2131361923;
+			// aapt resource value: 0x7f0a0084
+			public const int btnNoticies = 2131361924;
 			
 			// aapt resource value: 0x7f0a004f
 			public const int buttonPanel = 2131361871;
@@ -4001,6 +4001,9 @@ namespace App1
 			// aapt resource value: 0x7f0a004a
 			public const int image = 2131361866;
 			
+			// aapt resource value: 0x7f0a0083
+			public const int imageButton1 = 2131361923;
+			
 			// aapt resource value: 0x7f0a0074
 			public const int imageView = 2131361908;
 			
@@ -4027,6 +4030,9 @@ namespace App1
 			
 			// aapt resource value: 0x7f0a0081
 			public const int linearLayout2 = 2131361921;
+			
+			// aapt resource value: 0x7f0a0082
+			public const int linearLayout3 = 2131361922;
 			
 			// aapt resource value: 0x7f0a0018
 			public const int listMode = 2131361816;
@@ -4225,12 +4231,6 @@ namespace App1
 			
 			// aapt resource value: 0x7f0a0032
 			public const int snap = 2131361842;
-			
-			// aapt resource value: 0x7f0a0084
-			public const int space1 = 2131361924;
-			
-			// aapt resource value: 0x7f0a0082
-			public const int space2 = 2131361922;
 			
 			// aapt resource value: 0x7f0a0050
 			public const int spacer = 2131361872;

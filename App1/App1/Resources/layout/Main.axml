@@ -8,38 +8,42 @@
     <TextView
         android:text="Codi Postal: "
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/codi_postal" />
+        android:layout_height="171.5dp"
+        android:id="@+id/codi_postal"
+        android:layout_marginBottom="81.0dp" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1">
+        android:id="@+id/linearLayout1"
+        android:minWidth="25px"
+        android:minHeight="25px" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/linearLayout2">
         <LinearLayout
             android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayout2"
-            android:layout_marginBottom="43.0dp">
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/space2"
-                android:layout_marginRight="25.5dp" />
+            android:id="@+id/linearLayout3">
             <ImageButton
                 android:src="@android:drawable/ic_menu_gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:id="@+id/imageButton1" />
+            <ImageButton
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/btnNoticies" />
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/space1"
-                android:layout_marginRight="148.0dp" />
             <ImageButton
                 android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/btnAgenda" />
         </LinearLayout>
     </LinearLayout>

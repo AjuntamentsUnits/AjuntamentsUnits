@@ -9,6 +9,10 @@ using Xamarin;
 using System.Xml;
 using System.Net;
 using Android.Content;
+using Android.Net;
+using System.IO;
+using System.Threading.Tasks;
+using Org.Json;
 
 namespace App1
 {
@@ -17,63 +21,74 @@ namespace App1
     {
 
         string tag = "MainActivity";
+        Boolean loctrobat = false;
         LocationManager locMngr;
         string codi_postal = "";
         int codi_Ajuntament;
         TextView codi;
-        //ImageButton agenda;
+       // ImageButton agenda;
         //ImageButton noticia;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-            String s = "";
             // Set our view from the "main" layout resource
             SetContentView (Resource.Layout.Main);
 
             FormsMaps.Init(this, bundle);
 
             codi = FindViewById<TextView>(Resource.Id.codi_postal);
-
-            //buscar codi postal per obrir app
-            geocodificacio();
-            codi_Ajuntament = agafarCodiAjuntament(codi_postal);
-            //agenda.CallOnClick(Resource.Id.btnAgenda);
-
             ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
             ImageButton noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
 
+
+            ConnectivityManager connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
+            NetworkInfo networkInfo = connectivityManager.ActiveNetworkInfo;
+            bool isOnline = networkInfo.IsConnected;
+
+            if (isOnline)
+            {
+                //buscar codi postal per obrir app
+                geocodificacio();
+            }
+           
+             
+
+
             agenda.Click += delegate {
                 var activityAgenda = new Intent(this, typeof(AgendaActivity));
-                activityAgenda.PutExtra("MyData", "Data from Agenda");
+                activityAgenda.PutExtra("Codi_Ajuntament", codi_Ajuntament);
                 StartActivity(activityAgenda);
             };
             noticia.Click += delegate {
                 var activityNoticies = new Intent(this, typeof(NoticiaActivity));
-                activityNoticies.PutExtra("MyData", "Data from Noticies");
+                activityNoticies.PutExtra("Codi_Ajuntament", codi_Ajuntament);
                 StartActivity(activityNoticies);
             };
 
         }
 
-        public int agafarCodiAjuntament(String codi_postal)
+        public void agafarCodiAjuntament(String codi_postal)
         {
-            int codi = 0;
-            String xml = "";
 
-            String FilePath = "www.ajutnamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
+            String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
-            using (var wc = new WebClient())
+            HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
+            req.UserAgent = "AjuntamentsUnits";
+            XmlDocument xmlDoc = new XmlDocument();
+
+            using (HttpWebResponse resp = req.GetResponse() as HttpWebResponse)
             {
-                xml = wc.DownloadString(FilePath);
+                xmlDoc.Load(resp.GetResponseStream());
             }
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xml);
 
-
-
-            return codi;
+            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Ajuntament");
+            foreach (XmlNode NodeObj in xmlnodelstTrack)
+            {
+                codi_Ajuntament = Convert.ToInt32(NodeObj.ChildNodes[0].FirstChild.Value);
+            }
+           
         }
 
         public void geocodificacio()
@@ -92,30 +107,37 @@ namespace App1
             }
 
         }
-    
+
 
         public async void OnLocationChanged(Location location)
         {
-            // al canviar localitzacio, buscara quina és.
-            string latitude = "";
-            string longitude = "";
-            Log.Debug(tag, "Location changed");
-            latitude = location.Latitude.ToString();
-            longitude = location.Longitude.ToString();
+
+            if (!loctrobat)
+            {
+                // al canviar localitzacio, buscara quina és.
+                string latitude = "";
+                string longitude = "";
+                Log.Debug(tag, "Location changed");
+                latitude = location.Latitude.ToString();
+                longitude = location.Longitude.ToString();
 
 
-            System.Collections.Generic.List<Address> addresses;
-            Geocoder geocoder = new Geocoder(this);
+                System.Collections.Generic.List<Address> addresses;
+                Geocoder geocoder = new Geocoder(this);
 
-           
-            addresses = new System.Collections.Generic.List<Address>(geocoder.GetFromLocation(location.Latitude, location.Longitude, 1)); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            string s = addresses[0].GetAddressLine(1).ToString();
-               
-            codi_postal = s.Split()[0];
-            codi.Text = codi_postal;
 
-            OnStop();
+                addresses = new System.Collections.Generic.List<Address>(geocoder.GetFromLocation(location.Latitude, location.Longitude, 1)); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                string s = addresses[0].GetAddressLine(1).ToString();
 
+                codi_postal = s.Split()[0];
+
+
+                OnStop();
+
+                //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
+                agafarCodiAjuntament(codi_postal);
+                loctrobat = true;
+            }
         }
 
         public void OnProviderDisabled(string provider)
