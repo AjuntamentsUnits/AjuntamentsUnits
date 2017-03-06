@@ -17,10 +17,18 @@ namespace App1
     [Activity(Label = "NoticiaActivity")]
     public class NoticiaActivity : Activity
     {
+
+        TextView textView1;
+        int Codi_Ajuntament = 0;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            int Codi_Ajuntament = 0;
+
+            SetContentView(Resource.Layout.noticies);
+
+            textView1 = FindViewById<TextView>(Resource.Id.textView1);
+            
 
             // Create your application here
             Codi_Ajuntament = Convert.ToInt32(Intent.GetStringExtra("Codi_Ajuntament"));
@@ -42,14 +50,13 @@ namespace App1
                 xmlDoc.Load(resp.GetResponseStream());
             }
 
-            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Ajuntament");
+            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Noticia");
             foreach (XmlNode NodeObj in xmlnodelstTrack)
             {
-                // NodeObj.ChildNodes[0].InnerText
-                // NodeObj.ChildNodes[1].InnerText
-                // NodeObj.ChildNodes[2].InnerText
-                // NodeObj.ChildNodes[3].InnerText
-                // NodeObj.ChildNodes[4].InnerText
+                  textView1.Text = NodeObj.ChildNodes[0].FirstChild.Value;
+                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[1].FirstChild.Value;
+                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[2].FirstChild.Value;
+                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[3].FirstChild.Value;
             }
 
         }

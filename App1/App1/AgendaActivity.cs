@@ -17,13 +17,18 @@ namespace App1
     [Activity(Label = "AgendaActivity")]
     public class AgendaActivity : Activity
     {
+        TextView txt;
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             int Codi_Ajuntament = 0;
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.agenda);
+            txt = FindViewById< TextView > (Resource.Id.textView1);
+
 
             /*
              *  <android.support.v7.widget.CardView
@@ -62,17 +67,18 @@ namespace App1
                 android:layout_marginLeft="5dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>*/
-             
-             
 
-            LinearLayout mainLayout = FindViewById <LinearLayout> (Resource.Id.mainlayout);
-            Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
-            LinearLayout itemLayout = new LinearLayout(this);
-            TextView titol = new TextView(this);
-            titol.SetText("Hola", TextView.BufferType.Normal);
-            itemLayout.AddView(titol);
-            mainLayout.AddView(itemLayout);
 
+            /*
+                        LinearLayout mainLayout = FindViewById <LinearLayout> (Resource.Id.mainlayout);
+                        Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
+                        LinearLayout itemLayout = new LinearLayout(this);
+                        TextView titol = new TextView(this);
+                        titol.SetText("Hola", TextView.BufferType.Normal);
+                        itemLayout.AddView(titol);
+                        card.AddView(itemLayout);
+                        mainLayout.AddView(card);
+                        */
             // Create your application here
             Codi_Ajuntament = Convert.ToInt32(Intent.GetStringExtra("Codi_Ajuntament"));
             agafarAgenda(Codi_Ajuntament);
@@ -80,7 +86,7 @@ namespace App1
 
         public void agafarAgenda(int Codi_Ajuntament)
         {
-
+            Codi_Ajuntament = 1;
             String url = "http://www.ajuntamentsunits.cat/rss/WSAgenda.php?Codi_Aj=" + Codi_Ajuntament + "";
 
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
@@ -92,14 +98,13 @@ namespace App1
                 xmlDoc.Load(resp.GetResponseStream());
             }
 
-            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Ajuntament");
+            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Agenda");
             foreach (XmlNode NodeObj in xmlnodelstTrack)
             {
-                // NodeObj.ChildNodes[0].InnerText
-                // NodeObj.ChildNodes[1].InnerText
-                // NodeObj.ChildNodes[2].InnerText
-                // NodeObj.ChildNodes[3].InnerText
-                // NodeObj.ChildNodes[4].InnerText
+                txt.Text = NodeObj.ChildNodes[0].FirstChild.Value;
+              //  txt.Text = txt.Text + NodeObj.ChildNodes[1].FirstChild.Value;
+              //  txt.Text = txt.Text + NodeObj.ChildNodes[2].FirstChild.Value;
+              //  txt.Text = txt.Text + NodeObj.ChildNodes[3].FirstChild.Value;
             }
 
         }

@@ -28,7 +28,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#999999"
                 android:text="titol"
-                android:id="@+id/textView"
+                android:id="@+id/textView1"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="5dp" />
             <TextView
