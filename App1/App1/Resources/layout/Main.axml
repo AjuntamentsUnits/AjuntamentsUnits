@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <TextView
-        android:text="Codi Postal: "
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/codi_postal"
-        android:layout_marginBottom="5%" />
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,12 +14,12 @@
             android:id="@+id/btnAgenda"
             android:layout_marginBottom="0.0dp"
             android:layout_marginRight="15.0dp"
-            android:layout_marginLeft="15"
-            android:layout_marginTop="20" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
         <ImageButton
             android:src="@drawable/contact"
             android:id="@+id/imageButton2"
-            android:layout_marginTop="20" />
+            android:layout_marginTop="20dp" />
     </GridLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -48,9 +42,9 @@
                 <ImageButton
                     android:src="@drawable/news"
                     android:id="@+id/btnNoticies"
-                    android:layout_marginRight="15"
-                    android:layout_marginLeft="15"
-                    android:layout_marginTop="20"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </GridLayout>
@@ -59,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton3"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="20" />
+                android:layout_marginTop="20dp" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

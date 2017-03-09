@@ -39,7 +39,7 @@ namespace App1
 
             FormsMaps.Init(this, bundle);
 
-            codi = FindViewById<TextView>(Resource.Id.codi_postal);
+           // codi = FindViewById<TextView>(Resource.Id.codi_postal);
            // ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
             noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
             agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
@@ -57,10 +57,8 @@ namespace App1
             FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
             FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
            
-            base.OnCreate(bundle);
-            Forms.Init(this, bundle);
-            LoadApplication(new App());
-             
+           
+                       
 
 
             agenda.Click += delegate {

@@ -8,21 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout1"
-        android:layout_marginLeft="25"
-        android:layout_marginRight="25"
-        android:layout_marginTop="25">
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="25dp">
         <TextView
             android:text="Correu Electronic"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView1"
-            android:layout_marginTop="25" />
+            android:layout_marginTop="25dp" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText2"
-            android:layout_marginBottom="10" />
+            android:layout_marginBottom="10dp" />
         <TextView
             android:text="Assumpte"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText3"
-            android:layout_marginBottom="10" />
+            android:layout_marginBottom="10dp" />
         <TextView
             android:text="Missatge"
             android:textAppearance="?android:attr/textAppearanceMedium"
