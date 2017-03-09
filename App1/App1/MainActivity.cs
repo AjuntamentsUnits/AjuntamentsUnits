@@ -17,8 +17,8 @@ using Xamarin.Forms.Platform.Android;
 
 namespace App1
 {
-    [Activity(Label = "App1", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : FormsAppCompatActivity, ILocationListener
+    [Activity(Label = "AjuntamentsUnits", MainLauncher = true, Icon = "@drawable/icon")]
+    public class MainActivity : Activity, ILocationListener
     {
 
         string tag = "MainActivity";
@@ -59,7 +59,7 @@ namespace App1
            
            
                        
-
+            
 
             agenda.Click += delegate {
                 var activityAgenda = new Intent(this, typeof(AgendaActivity));
