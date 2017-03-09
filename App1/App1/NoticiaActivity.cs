@@ -17,18 +17,10 @@ namespace App1
     [Activity(Label = "NoticiaActivity")]
     public class NoticiaActivity : Activity
     {
-
-        TextView textView1;
-        int Codi_Ajuntament = 0;
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            SetContentView(Resource.Layout.noticies);
-
-            textView1 = FindViewById<TextView>(Resource.Id.textView1);
-            
+            int Codi_Ajuntament = 0;
 
             // Create your application here
             Codi_Ajuntament = Convert.ToInt32(Intent.GetStringExtra("Codi_Ajuntament"));
@@ -50,13 +42,46 @@ namespace App1
                 xmlDoc.Load(resp.GetResponseStream());
             }
 
-            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Noticia");
+            XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Ajuntament");
             foreach (XmlNode NodeObj in xmlnodelstTrack)
             {
-                  textView1.Text = NodeObj.ChildNodes[0].FirstChild.Value;
-                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[1].FirstChild.Value;
-                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[2].FirstChild.Value;
-                //  textView1.Text = textView1.Text + NodeObj.ChildNodes[3].FirstChild.Value;
+                // NodeObj.ChildNodes[0].InnerText
+                // NodeObj.ChildNodes[1].InnerText
+                // NodeObj.ChildNodes[2].InnerText
+                // NodeObj.ChildNodes[3].InnerText
+                // NodeObj.ChildNodes[4].InnerText
+                //Configurem layout titol i desc
+                var linearLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FillParent,
+                                                          ViewGroup.LayoutParams.WrapContent);
+                linearLayoutParams.Gravity = GravityFlags.CenterHorizontal;
+                linearLayoutParams.SetMargins(5, 0, 0, 0);
+                // <-
+
+                LinearLayout mainLayout = FindViewById<LinearLayout>(Resource.Id.mainlayout);
+                Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
+                card.LayoutParameters = linearLayoutParams;
+                LinearLayout itemLayout = new LinearLayout(this);
+
+                //Textview titol
+                TextView titol = new TextView(this);
+                titol.SetText("Hola", TextView.BufferType.Normal);
+                //Afegim els parametres de altura i amplada (layout)
+                titol.LayoutParameters = linearLayoutParams;
+                titol.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(153, 153, 153)));
+                titol.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                itemLayout.AddView(titol);
+                mainLayout.AddView(itemLayout);
+
+                //TextView Descripcio
+                TextView desc = new TextView(this);
+                desc.SetText("Descripciooooo", TextView.BufferType.Normal);
+                //Afegim els parametres de altura i amplada (layout)
+                desc.LayoutParameters = linearLayoutParams;
+                desc.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(170, 170, 170)));
+                desc.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                itemLayout.AddView(desc);
+                mainLayout.AddView(itemLayout);
+
             }
 
         }

@@ -13,10 +13,11 @@ using Android.Net;
 using System.IO;
 using System.Threading.Tasks;
 using Org.Json;
+using Xamarin.Forms.Platform.Android;
 
 namespace App1
 {
-    [Activity(Label = "App1", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "AjuntamentsUnits", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity, ILocationListener
     {
 
@@ -38,7 +39,7 @@ namespace App1
 
             FormsMaps.Init(this, bundle);
 
-            codi = FindViewById<TextView>(Resource.Id.codi_postal);
+           // codi = FindViewById<TextView>(Resource.Id.codi_postal);
            // ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
             noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
             agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
@@ -53,8 +54,11 @@ namespace App1
                 //buscar codi postal per obrir app
                 geocodificacio();
             }
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
            
-             
+           
+                       
             
 
             agenda.Click += delegate {

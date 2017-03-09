@@ -27,8 +27,8 @@ namespace App1
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.agenda);
-            txt = FindViewById< TextView > (Resource.Id.textView1);
 
+            TextView txt = FindViewById<TextView>(Resource.Id.textView1);
 
             /*
              *  <android.support.v7.widget.CardView
@@ -68,17 +68,9 @@ namespace App1
         </LinearLayout>
     </android.support.v7.widget.CardView>*/
 
+            //Configurem layout titol i desc
 
-            /*
-                        LinearLayout mainLayout = FindViewById <LinearLayout> (Resource.Id.mainlayout);
-                        Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
-                        LinearLayout itemLayout = new LinearLayout(this);
-                        TextView titol = new TextView(this);
-                        titol.SetText("Hola", TextView.BufferType.Normal);
-                        itemLayout.AddView(titol);
-                        card.AddView(itemLayout);
-                        mainLayout.AddView(card);
-                        */
+
             // Create your application here
             Codi_Ajuntament = Convert.ToInt32(Intent.GetStringExtra("Codi_Ajuntament"));
             agafarAgenda(Codi_Ajuntament);
@@ -86,7 +78,7 @@ namespace App1
 
         public void agafarAgenda(int Codi_Ajuntament)
         {
-            Codi_Ajuntament = 1;
+
             String url = "http://www.ajuntamentsunits.cat/rss/WSAgenda.php?Codi_Aj=" + Codi_Ajuntament + "";
 
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
@@ -98,14 +90,49 @@ namespace App1
                 xmlDoc.Load(resp.GetResponseStream());
             }
 
+            LinearLayout mainLayout = FindViewById<LinearLayout>(Resource.Id.mainlayout);
+
+
             XmlNodeList xmlnodelstTrack = xmlDoc.GetElementsByTagName("Agenda");
-            foreach (XmlNode NodeObj in xmlnodelstTrack)
-            {
-                txt.Text = NodeObj.ChildNodes[0].FirstChild.Value;
-              //  txt.Text = txt.Text + NodeObj.ChildNodes[1].FirstChild.Value;
-              //  txt.Text = txt.Text + NodeObj.ChildNodes[2].FirstChild.Value;
-              //  txt.Text = txt.Text + NodeObj.ChildNodes[3].FirstChild.Value;
-            }
+            //foreach (XmlNode NodeObj in xmlnodelstTrack)
+            //{
+                //txt.Text = txt.Text + NodeObj.ChildNodes[0].InnerText;
+                // NodeObj.ChildNodes[0].InnerText
+                // NodeObj.ChildNodes[1].InnerText
+                // NodeObj.ChildNodes[2].InnerText
+                // NodeObj.ChildNodes[3].InnerText
+                // NodeObj.ChildNodes[4].InnerText
+                   var linearLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FillParent,
+                                                            ViewGroup.LayoutParams.WrapContent);
+                   linearLayoutParams.Gravity = GravityFlags.CenterHorizontal;
+                   linearLayoutParams.SetMargins(5, 0, 0, 0);
+                   // <-
+
+                   
+                  // Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
+                   //card.LayoutParameters = linearLayoutParams;
+                   LinearLayout itemLayout = new LinearLayout(this);
+
+                   //Textview titol
+                   TextView titol = new TextView(this);
+                   titol.SetText("Hola", TextView.BufferType.Normal);
+                   //Afegim els parametres de altura i amplada (layout)
+                   titol.LayoutParameters = linearLayoutParams;
+                   titol.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(153, 153, 153)));
+                   titol.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                 //  itemLayout.AddView(titol);
+                 
+                   //TextView Descripcio
+                   TextView desc = new TextView(this);
+                   desc.SetText("Descripciooooo", TextView.BufferType.Normal);
+                   //Afegim els parametres de altura i amplada (layout)
+                   desc.LayoutParameters = linearLayoutParams;
+                   desc.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(170, 170, 170)));
+                   desc.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                   itemLayout.AddView(desc);
+
+                   mainLayout.AddView(itemLayout);
+            //}
 
         }
     }

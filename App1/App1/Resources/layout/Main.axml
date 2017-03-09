@@ -5,23 +5,26 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <TextView
-        android:text="Codi Postal: "
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="171.5dp"
-        android:id="@+id/codi_postal"
-        android:layout_marginBottom="81.0dp" />
+        android:layout_height="wrap_content"
+        android:id="@+id/gridLayout1">
+        <ImageButton
+            android:src="@drawable/calendar"
+            android:id="@+id/btnAgenda"
+            android:layout_marginBottom="0.0dp"
+            android:layout_marginRight="15.0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp" />
+        <ImageButton
+            android:src="@drawable/contact"
+            android:id="@+id/imageButton2"
+            android:layout_marginTop="20dp" />
+    </GridLayout>
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout1"
-        android:minWidth="25px"
-        android:minHeight="25px" />
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         android:id="@+id/linearLayout2">
         <LinearLayout
             android:orientation="horizontal"
@@ -30,21 +33,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayout3">
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
+            <GridLayout
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:id="@+id/gridLayout2"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/imageButton1" />
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:src="@drawable/news"
+                    android:id="@+id/btnNoticies"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </GridLayout>
             <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
+                android:src="@drawable/email"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnNoticies" />
-            <ImageButton
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnAgenda" />
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp" />
         </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_marginTop="87.0dp" />
 </LinearLayout>
