@@ -8,5 +8,6 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<application android:label="App1"></application>
+  <!--Es queixa de que selected text color ja esta definit-->
+  <application android:label="App1" android:icon="@drawable/icon" android:theme="@style/MyTheme"/>
 </manifest>

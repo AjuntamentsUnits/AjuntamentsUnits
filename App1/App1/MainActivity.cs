@@ -13,11 +13,12 @@ using Android.Net;
 using System.IO;
 using System.Threading.Tasks;
 using Org.Json;
+using Xamarin.Forms.Platform.Android;
 
 namespace App1
 {
     [Activity(Label = "App1", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity, ILocationListener
+    public class MainActivity : FormsAppCompatActivity, ILocationListener
     {
 
         string tag = "MainActivity";
@@ -52,8 +53,13 @@ namespace App1
                 //buscar codi postal per obrir app
                 geocodificacio();
             }
-           
-             
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+
+            base.OnCreate(bundle);
+            Forms.Init(this, bundle);
+            LoadApplication(new App());
+
 
 
             agenda.Click += delegate {

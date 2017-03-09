@@ -50,6 +50,38 @@ namespace App1
                 // NodeObj.ChildNodes[2].InnerText
                 // NodeObj.ChildNodes[3].InnerText
                 // NodeObj.ChildNodes[4].InnerText
+                //Configurem layout titol i desc
+                var linearLayoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FillParent,
+                                                          ViewGroup.LayoutParams.WrapContent);
+                linearLayoutParams.Gravity = GravityFlags.CenterHorizontal;
+                linearLayoutParams.SetMargins(5, 0, 0, 0);
+                // <-
+
+                LinearLayout mainLayout = FindViewById<LinearLayout>(Resource.Id.mainlayout);
+                Android.Support.V7.Widget.CardView card = new Android.Support.V7.Widget.CardView(this);
+                card.LayoutParameters = linearLayoutParams;
+                LinearLayout itemLayout = new LinearLayout(this);
+
+                //Textview titol
+                TextView titol = new TextView(this);
+                titol.SetText("Hola", TextView.BufferType.Normal);
+                //Afegim els parametres de altura i amplada (layout)
+                titol.LayoutParameters = linearLayoutParams;
+                titol.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(153, 153, 153)));
+                titol.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                itemLayout.AddView(titol);
+                mainLayout.AddView(itemLayout);
+
+                //TextView Descripcio
+                TextView desc = new TextView(this);
+                desc.SetText("Descripciooooo", TextView.BufferType.Normal);
+                //Afegim els parametres de altura i amplada (layout)
+                desc.LayoutParameters = linearLayoutParams;
+                desc.SetTextColor(Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Rgb(170, 170, 170)));
+                desc.SetTextAppearance(this, Resource.Style.TextAppearance_AppCompat_Medium);
+                itemLayout.AddView(desc);
+                mainLayout.AddView(itemLayout);
+
             }
 
         }
