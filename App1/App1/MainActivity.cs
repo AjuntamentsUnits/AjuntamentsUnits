@@ -27,8 +27,8 @@ namespace App1
         string codi_postal = "";
         int codi_Ajuntament;
         TextView codi;
-       // ImageButton agenda;
-        //ImageButton noticia;
+        ImageButton agenda;
+        ImageButton noticia;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -40,8 +40,9 @@ namespace App1
             FormsMaps.Init(this, bundle);
 
             codi = FindViewById<TextView>(Resource.Id.codi_postal);
-            ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
-            ImageButton noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
+           // ImageButton agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
+            noticia = FindViewById<ImageButton>(Resource.Id.btnNoticies);
+            agenda = FindViewById<ImageButton>(Resource.Id.btnAgenda);
 
 
             ConnectivityManager connectivityManager = (ConnectivityManager)GetSystemService(ConnectivityService);
@@ -55,11 +56,11 @@ namespace App1
             }
             FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
             FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
-
+           
             base.OnCreate(bundle);
             Forms.Init(this, bundle);
             LoadApplication(new App());
-
+             
 
 
             agenda.Click += delegate {
@@ -77,7 +78,7 @@ namespace App1
 
         public void agafarCodiAjuntament(String codi_postal)
         {
-
+            codi_postal = "08500";
             String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
@@ -137,8 +138,6 @@ namespace App1
 
                 codi_postal = s.Split()[0];
 
-
-                OnStop();
 
                 //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
                 agafarCodiAjuntament(codi_postal);
