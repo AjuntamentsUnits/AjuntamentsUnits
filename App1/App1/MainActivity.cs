@@ -26,9 +26,9 @@ namespace App1
         LocationManager locMngr;
         string codi_postal = "";
         int codi_Ajuntament;
-        TextView codi;
         ImageButton agenda;
         ImageButton noticia;
+        Variables v = new Variables();
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -56,27 +56,25 @@ namespace App1
             }
             FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
             FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
-           
-           
                        
             
 
             agenda.Click += delegate {
-                var activityAgenda = new Intent(this, typeof(AgendaActivity));
-                activityAgenda.PutExtra("Codi_Ajuntament", codi_Ajuntament);
-                StartActivity(activityAgenda);
+                 Intent i = new Intent(this, typeof(AgendaActivity));
+                 i.PutExtra("Codi_Ajuntament", codi_Ajuntament);
+                 StartActivity(i);
             };
             noticia.Click += delegate {
-                var activityNoticies = new Intent(this, typeof(NoticiaActivity));
-                activityNoticies.PutExtra("Codi_Ajuntament", codi_Ajuntament);
-                StartActivity(activityNoticies);
+                Intent myIntent = new Intent(this, typeof(NoticiaActivity));
+                myIntent.PutExtra("Codi_Ajuntament", codi_Ajuntament);
+                StartActivity(myIntent);
             };
 
         }
 
         public void agafarCodiAjuntament(String codi_postal)
         {
-            codi_postal = "08500";
+            codi_postal = "08503";
             String url = "http://www.ajuntamentsunits.cat/rss/WSAjuntament.php?Codi_PAj=" + codi_postal + "";
 
             HttpWebRequest req = WebRequest.Create(url) as HttpWebRequest;
@@ -93,6 +91,7 @@ namespace App1
             {
                 codi_Ajuntament = Convert.ToInt32(NodeObj.ChildNodes[0].FirstChild.Value);
             }
+            v.Get_Codi_Ajuntament = codi_Ajuntament;
            
         }
 
@@ -108,7 +107,7 @@ namespace App1
             }
             else
             {
-                Toast.MakeText(this, "The Network Provider does not exist or is not enabled!", ToastLength.Long).Show();
+                Toast.MakeText(this, "No s'ha pogut trobar cap proveïdor de xarxa. Reinicia l'aplicació!", ToastLength.Long).Show();
             }
 
         }
@@ -136,6 +135,7 @@ namespace App1
 
                 codi_postal = s.Split()[0];
 
+                v.Get_Codi_Postal = codi_postal;
 
                 //codi_Ajuntament = agafarCodiAjuntament(codi_postal);
                 agafarCodiAjuntament(codi_postal);

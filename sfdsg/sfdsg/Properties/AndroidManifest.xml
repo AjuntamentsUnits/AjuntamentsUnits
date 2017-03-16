@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="sfdsg.sfdsg" android:versionCode="1" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="16" />
+  <application android:label="sfdsg">
+    <activity
+      android:name="md50530cb6a4c8baa555130c0f8ff071468.AgendaActivity"
+      android:label="Hola" >
+    </activity>
+  </application>
+ 
+</manifest>
